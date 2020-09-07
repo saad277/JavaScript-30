@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Firebase Storage </title>
+</head>
+ <!-- Compiled and minified CSS -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+ <!-- Compiled and minified JavaScript -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+ <!--Import Google Icon Font-->
+ <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-app.js"></script>
+
+ 
+ 
+ 
+  <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-storage.js"></script>
+
+
+<script > // Your web app's Firebase configuration
+    var firebaseConfig = {
+       apiKey: "AIzaSyCmeM4Kyk9giFFksxCIso7kEfozDNQCaqU",
+       authDomain: "native-firebase-6eb6c.firebaseapp.com",
+       databaseURL: "https://native-firebase-6eb6c.firebaseio.com",
+       projectId: "native-firebase-6eb6c",
+       storageBucket: "native-firebase-6eb6c.appspot.com",
+       messagingSenderId: "877280431920",
+       appId: "1:877280431920:web:cd151a69dcf23a50fc42f5"
+     };
+     // Initialize Firebase
+     firebase.initializeApp(firebaseConfig);
+     </script>
+
+
+<body>
+
+    <h1>Firebase Storage</h1>
+    
+
+    <label for="inp">Upload</label>
+    <input type="file" id="inp" >
+
+<button onclick="upload()">Upload</button>
+
+<br/> <br/>
+
+<button onclick="download()">Download</button>
+
+
+
+<script>
+var storageRef;
+var selectedfile;
+
+const input=document.querySelector("#inp");
+
+input.addEventListener("change",(event)=>{
+
+console.log(event)
+
+selectedfile=event.target.files[0];
+
+console.log(selectedfile)
+
+
+})
+
+const upload=()=>{
+
+    let filename=selectedfile.name;
+
+    var storageRef = firebase.storage().ref("/files/"+filename);
+
+    var uploadTask=storageRef.put(selectedfile);
+
+
+    uploadTask.on("state_changed",(snapshot)=>{
+
+        console.log(snapshot)
+    })
+
+console.log(storageRef);
+
+
+
+
+
+
+
+}
+
+const download=()=>{
+    var storage = firebase.storage();
+
+    
+    var pathReference = storage.ref('/dogs/Application.docx');
+
+    console.log(pathReference)
+
+    var gsReference = storage.refFromURL('gs://bucket/dogs/Application.docx')
+
+
+    console.log(gsReference)
+
+    storageRef.child('/dogs/Application.docx').getDownloadURL().then((url)=>{
+
+
+            console.log(url)
+
+    })
+
+
+
+}
+
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
